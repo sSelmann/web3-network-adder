@@ -33,10 +33,10 @@ function App() {
           }
         ]
       });
-      alert('Ağ eklendi!');
+      alert('Networks is Added!');
     } catch (error) {
       console.error(error);
-      alert('Ağ eklenemedi!');
+      alert('Couldnt Add Network!');
     }
   };
 
@@ -45,7 +45,7 @@ function App() {
    if (typeof window.ethereum !== "undefined") {
        console.log("MetaMask installed")
        await window.ethereum.request({ method: 'eth_requestAccounts' });
-       document.getElementById("form").style.display = 'block';
+       document.getElementById("form").style.display = 'flex';
        document.getElementById("connectButton").style.display = 'none';
    } else {
        window.open("https://metamask.io/download/", "_blank");
@@ -54,17 +54,18 @@ function App() {
   };
 
   return (
-    <div className="w-full flex items-center m-auto justify-center bg-slate-400 h-screen">
-      <button id="connectButton" onClick={connectMetamask}>Connect Metamask</button>
+    <div className="w-full flex items-center m-auto justify-center h-screen bg-gray-800">
+      <button className="py-[10px] pr-5 pl-5 bg-orange-500 rounded-lg text-white hover:text-black hover:bg-white ease-in-out duration-500"  id="connectButton" onClick={connectMetamask}>Connect Metamask</button>
       <div id="form" className="flex flex-col" onSubmit={handleSubmit} style={{"display": "none"}}>
 
         <input
           type="text"
           name="name"
           value={formData.name}
+          title="Network Name"
           onChange={handleChange}
           className="bg-gray-50 border text-gray-900 text-sm rounded-lg border-none focus:border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2"
-          placeholder="Network name"
+          placeholder="Network Name"
           required />
 
 
@@ -72,9 +73,10 @@ function App() {
           type="text"
           name="rpc"
           value={formData.rpc}
+          title="RPC URL"
           onChange={handleChange}
           className="bg-gray-50 border text-gray-900 text-sm rounded-lg border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-          placeholder="RPC url"
+          placeholder="RPC URL"
           required />
 
         <input
@@ -82,8 +84,10 @@ function App() {
           name="chainId"
           value={formData.chainId}
           onChange={handleChange}
+          title="Chaind Id"
+          style={{"background-color": "#37415147"}}
           className="bg-gray-100 border text-gray-900 text-sm rounded-lg border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4  cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2"
-          placeholder="Chain ID: 42161"
+          placeholder="Chain ID"
           disabled />
 
         <input
@@ -91,11 +95,13 @@ function App() {
           name="blockScan"
           value={formData.blockScan}
           onChange={handleChange}
+          title="BlockScan URL"
+          style={{"background-color": "#37415147"}}
           className="bg-gray-100 border text-gray-900 text-sm rounded-lg border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
           placeholder="https://arbiscan.io"
           disabled />
 
-        <button className="py-[10px] bg-orange-500 rounded-lg text-white hover:text-black hover:bg-white ease-in-out duration-500" type="submit">Add Network</button>
+        <button className="py-[10px] pr-5 pl-5 bg-orange-500 rounded-lg text-white hover:text-black hover:bg-white ease-in-out duration-500" type="submit" onClick={handleSubmit}>Add Network</button>
       </div>
     </div>
   );
