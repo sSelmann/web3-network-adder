@@ -40,48 +40,64 @@ function App() {
     }
   };
 
+  const connectMetamask = async () => {
+
+   if (typeof window.ethereum !== "undefined") {
+       console.log("MetaMask installed")
+       await window.ethereum.request({ method: 'eth_requestAccounts' });
+       document.getElementById("form").style.display = 'block';
+       document.getElementById("connectButton").style.display = 'none';
+   } else {
+       window.open("https://metamask.io/download/", "_blank");
+   }
+
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Network Name:
+    <div className="w-full flex items-center m-auto justify-center bg-slate-400 h-screen">
+      <button id="connectButton" onClick={connectMetamask}>Connect Metamask</button>
+      <div id="form" className="flex flex-col" onSubmit={handleSubmit} style={{"display": "none"}}>
+
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-        />
-      </label>
-      <label>
-        RPC:
+          className="bg-gray-50 border text-gray-900 text-sm rounded-lg border-none focus:border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2"
+          placeholder="Network name"
+          required />
+
+
         <input
           type="text"
           name="rpc"
           value={formData.rpc}
           onChange={handleChange}
-        />
-      </label>
-      <label>
-        Chain ID:
+          className="bg-gray-50 border text-gray-900 text-sm rounded-lg border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+          placeholder="RPC url"
+          required />
+
         <input
-          type="number"
+          type="text"
           name="chainId"
           value={formData.chainId}
           onChange={handleChange}
-          disabled
-        />
-      </label>
-      <label>
-      BlokcScan:
+          className="bg-gray-100 border text-gray-900 text-sm rounded-lg border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4  cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2"
+          placeholder="Chain ID: 42161"
+          disabled />
+
         <input
-          type="text"
+          type="number"
           name="blockScan"
           value={formData.blockScan}
           onChange={handleChange}
-          disabled
-        />
-      </label>
-      <button type="submit">Add Network</button>
-    </form>
+          className="bg-gray-100 border text-gray-900 text-sm rounded-lg border-none focus:ring-blue-500 focus:border-blue-500 block w-full py-[10px] pl-4 pr-4 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+          placeholder="https://arbiscan.io"
+          disabled />
+
+        <button className="py-[10px] bg-orange-500 rounded-lg text-white hover:text-black hover:bg-white ease-in-out duration-500" type="submit">Add Network</button>
+      </div>
+    </div>
   );
 }
 
